@@ -3,7 +3,7 @@ package goose.game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GooseGame {
+public class GooseGame implements Game {
 
 
 	public final static String PLAYER_ALREADY_EXISTS = "%s: already existing player";
@@ -16,6 +16,7 @@ public class GooseGame {
 		this.commandStrategy = new CommandStrategy();
 	}
 
+	@Override
 	public String runCommand(String command) {
 
 		Command run = commandStrategy.run(command);

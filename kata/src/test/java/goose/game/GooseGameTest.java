@@ -54,4 +54,29 @@ public class GooseGameTest
         Assert.assertEquals("Pippo: already existing player", response);
     }
 
+    @Test
+    public void movePlayerFromStartTest()
+    {
+        GooseGame game = new GooseGame();
+
+        String response = game.runCommand("add player Pippo");
+        response = game.runCommand("add player Pluto");
+        response = game.runCommand("move Pippo 4, 2");
+
+        Assert.assertEquals("Pippo rolls 4, 2. Pippo moves from Start to 6", response);
+    }
+
+    @Test
+    public void movePlayerMultipleTest()
+    {
+        GooseGame game = new GooseGame();
+
+        String response = game.runCommand("add player Pippo");
+        response = game.runCommand("add player Pluto");
+        response = game.runCommand("move Pippo 4, 2");
+        response = game.runCommand("move Pippo 2, 3");
+
+        Assert.assertEquals("Pippo rolls 2, 3. Pippo moves from 6 to 11", response);
+    }
+
 }

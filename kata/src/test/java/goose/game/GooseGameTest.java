@@ -79,4 +79,38 @@ public class GooseGameTest
         Assert.assertEquals("Pippo rolls 2, 3. Pippo moves from 6 to 11", response);
     }
 
+    @Test
+    public void movePlayerToWinTest()
+    {
+        GooseGame game = new GooseGame();
+
+        String response = game.runCommand("add player Pippo");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 1, 2");
+
+
+        Assert.assertEquals("Pippo rolls 1, 2. Pippo moves from 60 to 63. Pippo Wins!!", response);
+    }
+
+    @Test
+    public void movePlayerToBounceTest()
+    {
+        GooseGame game = new GooseGame();
+
+        String response = game.runCommand("add player Pippo");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 6, 6");
+        response = game.runCommand("move Pippo 3, 2");
+
+
+        Assert.assertEquals("Pippo rolls 3, 2. Pippo moves from 60 to 63. Pippo bounces! Pippo returns to 61", response);
+    }
+
 }

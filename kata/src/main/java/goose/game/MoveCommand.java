@@ -6,6 +6,10 @@ import java.util.List;
 
 public class MoveCommand implements  Command{
 
+	public static final int WIN_VALUE = 63;
+	public static final String BOUNCE = "%s rolls %d, %d. %s moves from %s to %d. %s bounces! %s returns to %d";
+	public static final String WINS = "%s rolls %d, %d. %s moves from %s to %d. %s Wins!!";
+	public static final String MOVE = "%s rolls %d, %d. %s moves from %s to %d";
 	private String command;
 
 	public MoveCommand(String command) {
@@ -30,23 +34,32 @@ public class MoveCommand implements  Command{
 
 		User user = players.stream().filter(player -> StringUtils.equals(player.getName(), userName)).findFirst().get();
 
-
 		String startFrom = user.getPosition() == 0 ? "Start" : ""+user.getPosition();
 		user.setPosition(user.getPosition() + sum);
 
-		//Pippo rolls 4, 2. Pippo moves from Start to 6
-		return String.format("%s rolls %d, %d. %s moves from %s to %d", userName, firstValue, secondValue, userName, startFrom, user.getPosition());
+		if(hasPlayerWin(user)){
+			return String.format(WINS, userName, firstValue, secondValue, userName, startFrom, user.getPosition(),userName);
 
-
-		/*
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("players: ");
-		for (String player : players) {
-			stringBuilder.append(player+", ");
 		}
-		stringBuilder.setLength(stringBuilder.length()-2);
-		return stringBuilder.toString();
-		*/
+
+		if(hasPlayerBounce(user)){
+			int bounce = user.getPosition() - WIN_VALUE;
+			int newPosition = WIN_VALUE - bounce;
+			return String.format(BOUNCE, userName,
+					firstValue, secondValue, userName, startFrom, WIN_VALUE,userName,userName,newPosition);
+
+		}
+
+		return String.format(MOVE, userName, firstValue, secondValue, userName, startFrom, user.getPosition());
+
+	}
+
+	private boolean hasPlayerBounce(User user) {
+		return user.getPosition() > WIN_VALUE;
+	}
+
+	private boolean hasPlayerWin(User user) {
+		return user.getPosition() == WIN_VALUE;
 	}
 
 }

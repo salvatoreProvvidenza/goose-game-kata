@@ -2,6 +2,7 @@ package goose.game;
 
 public class CommandStrategy {
 
+
 	public Command run(String command){
 
 		if(command.startsWith("add")){
@@ -9,7 +10,6 @@ public class CommandStrategy {
 		} else {
 			return new MoveCommand(command);
 		}
-
 	}
 
 }
